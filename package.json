@@ -1,0 +1,23 @@
+{
+  "name": "soundhunter",
+  "version": "0.1.0",
+  "description": "Turn objects around you into a live, networked loop. Scan objects with your webcam, assign sounds, and jam together over the network.",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "dev": "electron ."
+  },
+  "author": "SoundHunter Team",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^31.0.0"
+  },
+  "dependencies": {
+    "@tensorflow-models/coco-ssd": "^2.2.3",
+    "@tensorflow/tfjs": "^4.20.0",
+    "firebase": "^10.12.0",
+    "socket.io": "^4.7.5",
+    "socket.io-client": "^4.7.5",
+    "tone": "^15.0.4"
+  }
+}

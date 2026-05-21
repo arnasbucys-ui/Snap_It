@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>SoundHunter</title>
+  <link rel="stylesheet" href="src/ui/styles.css" />
+</head>
+<body>
+  <!--
+    This is the main UI of the app. It's split into five panels, one for each
+    big concept in SoundHunter. Right now they're empty placeholders — each
+    module under /src will progressively wire its logic into the matching panel.
+  -->
+
+  <header class="app-header">
+    <h1>SoundHunter</h1>
+    <p class="tagline">Scan the world. Jam together.</p>
+  </header>
+
+  <main class="grid">
+
+    <!-- 1. Camera feed: shows live webcam input used for object detection. -->
+    <section id="camera-panel" class="panel">
+      <h2>Camera</h2>
+      <video id="camera-feed" autoplay muted playsinline></video>
+      <button id="start-camera-btn">Start Camera</button>
+    </section>
+
+    <!-- 2. Detected objects: list of items the vision model currently sees. -->
+    <section id="detection-panel" class="panel">
+      <h2>Detected Objects</h2>
+      <ul id="detected-list">
+        <li class="empty">Nothing detected yet.</li>
+      </ul>
+    </section>
+
+    <!-- 3. Tempo controls: master BPM + per-object tempo multipliers. -->
+    <section id="tempo-panel" class="panel">
+      <h2>Tempo</h2>
+      <label for="master-bpm">Master BPM</label>
+      <input type="range" id="master-bpm" min="40" max="200" value="120" />
+      <span id="master-bpm-value">120</span>
+      <button id="play-btn">Play</button>
+      <button id="stop-btn">Stop</button>
+    </section>
+
+    <!-- 4. Card collection: every scanned object becomes a card stored here. -->
+    <section id="collection-panel" class="panel">
+      <h2>Collection</h2>
+      <div id="card-grid">
+        <p class="empty">No cards yet — scan something!</p>
+      </div>
+    </section>
+
+    <!-- 5. Network panel: host or join a jam session over the local network. -->
+    <section id="network-panel" class="panel">
+      <h2>Network</h2>
+      <div class="network-controls">
+        <button id="host-btn">Host Session</button>
+        <button id="join-btn">Join Session</button>
+        <input type="text" id="host-address" placeholder="host IP (e.g. 192.168.1.10)" />
+      </div>
+      <p id="network-status">Offline</p>
+    </section>
+
+  </main>
+
+  <!--
+    Each module is loaded as a separate script so the concerns stay split.
+    They use require() because nodeIntegration is enabled in main.js.
+  -->
+  <script src="src/vision/vision.js"></script>
+  <script src="src/audio/audio.js"></script>
+  <script src="src/data/collection.js"></script>
+  <script src="src/multiplayer/network.js"></script>
+  <script src="src/ui/app.js"></script>
+</body>
+</html>
