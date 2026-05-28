@@ -28,12 +28,9 @@ const ui = (function () {
     setupScanTab();
     setupSequencerTransport();
 
-    // Start the live camera + object detection.
-    Vision.start(
-      document.getElementById('camera-video'),
-      document.getElementById('camera-canvas'),
-      document.getElementById('vision-status')
-    );
+    // Start the webcam, load COCO-SSD, then kick off the bounding-box overlay.
+    await cameraModule.init(document.getElementById('camera-video'));
+    cameraModule.startLiveDetection(document.getElementById('camera-canvas'));
     renderLibrary();
     renderSequencer();
 
@@ -93,10 +90,16 @@ const ui = (function () {
     mystery.textContent = 'doorknob (unknown object -> Mystery Hit)';
     select.appendChild(mystery);
 
-    document.getElementById('scan-button').addEventListener('click', function () {
-      // This is the seam the real camera module replaces: instead of reading a
-      // dropdown, the vision code will call cameraStub.simulateScan(detected).
-      cameraStub.simulateScan(select.value);
+    document.getElementById('scan-button').addEventListener('click', async function () {
+      const statusEl = document.getElementById('vision-status');
+      statusEl.textContent = 'Scanning…';
+      const result = await cameraModule.scan();
+      if (result) {
+        statusEl.textContent = 'Scanned: ' + result.type + ' (' + Math.round(result.confidence * 100) + '%)';
+        cameraStub.simulateScan(result.type);
+      } else {
+        statusEl.textContent = 'Nothing detected — try again';
+      }
     });
   }
 
