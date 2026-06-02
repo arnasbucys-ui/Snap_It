@@ -49,6 +49,14 @@ Open a live room and invite other players. Each player triggers items from their
 - Location access (for the map and zone missions)
 - Microphone/speakers or headphones (for jamming)
 
+## Camera & Object Detection
+
+When you first open the Scan tab, your browser will ask for camera access — grant it to enable scanning.
+
+**Detection runs entirely on your machine using TensorFlow.js + COCO-SSD.** No photos or data are sent anywhere. After the model downloads on first load (~5 MB), the app works fully offline.
+
+Point the camera at a physical object — a cup, book, bottle, keyboard, plant, etc. — and red bounding boxes will appear around anything the model recognises. Click **Scan** to capture the best detection and unlock its sample. If nothing is detected above the confidence threshold, the button will say "Nothing detected — try again".
+
 ## Getting Started
 
 1. Launch the app on your laptop
